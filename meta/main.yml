@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: horthy
+  description: Install a specific version of git from source
+  license: MIT
+  min_ansible_version: 1.5
+  platforms:
+  - name: Ubuntu
+    versions:
+    - trusty
+    - precise
+  categories:
+    - system
+    - development

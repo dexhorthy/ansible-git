@@ -1,0 +1,48 @@
+---
+- debug: var=git
+
+- name: Install Dependencies | Update apt package cache
+  apt: update_cache=yes
+  sudo: yes
+
+- name: Install Dependencies | install dependencies
+  apt: pkg={{ item }}
+  sudo: yes
+  with_items:
+    - build-essential
+    - libssl-dev
+    - libcurl4-gnutls-dev
+    - libexpat1-dev
+    - gettext
+    - unzip
+
+- name: Install git | download git zip
+  get_url:
+    url: https://github.com/git/git/archive/v{{ git.version }}.zip
+    dest: /tmp/git.zip
+
+- name: Install git | unzip git archive
+  unarchive:
+    src: /tmp/git.zip
+    dest: /tmp
+    copy: no
+    force: no
+
+- name: Install git | Make All
+  shell: make prefix=/usr/local all
+  args:
+    chdir: /tmp/git-{{ git.version }}
+
+- name: Install git | Make install
+  shell: make prefix=/usr/local install
+  args:
+    chdir: /tmp/git-{{ git.version }}
+  sudo: yes
+
+- name: Verify Installation | Check git version
+  command: git --version
+  register: result
+
+- name: Verify Installation | Fail if git version incorrect
+  fail: msg="Wanted git version {{ git.version }}, got {{ result.stdout }} instead"
+  when: "'{{ git.version }}' not in result.stdout"

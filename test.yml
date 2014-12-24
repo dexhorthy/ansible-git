@@ -1,0 +1,9 @@
+---
+- name: Install git version 2.2.1
+  hosts: all
+  sudo: yes
+
+  roles:
+    - role: ansible-git
+      git:
+        version: 2.2.1
