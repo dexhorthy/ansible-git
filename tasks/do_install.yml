@@ -1,0 +1,7 @@
+---
+- include: install_from_ppa.yml
+  when: not git.install_from_source
+
+- include: install_from_source.yml
+  when: git.install_from_source
+

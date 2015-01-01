@@ -1,18 +1,28 @@
 ---
 
-- name: Install Dependencies | Update apt package cache
+- name: Install from ppa | Install Dependencies | Update apt package cache
   apt: update_cache=yes
   sudo: yes
 
-- name: Install Dependencies | install apt dependencies
+- name: Install from ppa | Install Dependencies | install apt dependencies
   apt: pkg=python-apt
   sudo: yes
 
-- name: Install Dependencies | add apt repository
+- name: Install from ppa | Install Dependencies | add apt repository
   apt_repository: repo=ppa:git-core/ppa
   sudo: yes
 
-- name: Install git | apt package
-  apt: pkg=git update_cache=yes
+- name: Install from ppa | Install Dependencies | Update apt package cache
+  apt: update_cache=yes
+  sudo: yes
 
+- name: Install from ppa | Install git | apt package
+  apt: pkg=git
 
+- name: Install from source | Verify Installation | Check git version
+  command: git --version
+  register: result
+
+- name: Install from source | Verify Installation | Fail if git version incorrect
+  fail: msg="Wanted git version {{ git.version }}, got {{ result.stdout }} instead"
+  when: "'{{ git.version }}' not in result.stdout"

@@ -1,9 +1,11 @@
 ---
 - debug: var=git
 
-- include: install_from_ppa.yml
-  when: not git.install_from_source
+- name: Verify Installation | Check current git version
+  command: git --version
+  ignore_errors: yes
+  register: current_git_version
 
-- include: install_from_source.yml
-  when: git.install_from_source
+- include: do_install.yml
+  when: current_git_version.failed or '{{ git.version }}' not in current_git_version.stdout
 
