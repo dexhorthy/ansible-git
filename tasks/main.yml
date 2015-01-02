@@ -7,11 +7,6 @@
   register: current_git_version
 
 
-- name: Verify Installation | Backup current git version
-  command: mv /usr/bin/git /usr/bin/git.bak  # TODO use which/register?
-  when: not current_git_version|failed
-  sudo: yes
-
 - include: do_install.yml
   when: "current_git_version|failed or '{{ git.version }}' not in current_git_version.stdout"
 
