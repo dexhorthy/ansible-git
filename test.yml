@@ -7,4 +7,4 @@
     - role: ansible-git
       git:
         version: 2.2.1
-        install_from_source: yes
+        install_from_source: no
