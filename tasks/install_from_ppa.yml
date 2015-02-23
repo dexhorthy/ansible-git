@@ -23,6 +23,7 @@
   command: git --version
   register: result
 
-- name: Install from source | Verify Installation | Fail if git version incorrect
+- name: Install from PPA | Verify Installation | Fail if git version incorrect
   fail: msg="Wanted git version {{ git.version }}, got {{ result.stdout }} instead"
-  when: "'{{ git.version }}' not in result.stdout"
+  when: "{{verify_version}} and '{{ git.version }}' not in result.stdout"
+
