@@ -25,5 +25,5 @@
 
 - name: Install from PPA | Verify Installation | Fail if git version incorrect
   fail: msg="Wanted git version {{ git.version }}, got {{ result.stdout }} instead"
-  when: "{{verify_version}} and '{{ git.version }}' not in result.stdout"
+  when: "{{git.verify_version}} and '{{ git.version }}' not in result.stdout"
 
