@@ -17,6 +17,7 @@
   sudo: yes
 
 - name: Install from ppa | Install git | apt package
+  sudo: yes
   apt: pkg=git
 
 - name: Install from source | Verify Installation | Check git version
@@ -25,5 +26,5 @@
 
 - name: Install from PPA | Verify Installation | Fail if git version incorrect
   fail: msg="Wanted git version {{ git.version }}, got {{ result.stdout }} instead"
-  when: "{{git.verify_version}} and '{{ git.version }}' not in result.stdout"
+  when: "{{git.verify_version}} and '{{ git.version }}' not in result.stdout "
 
