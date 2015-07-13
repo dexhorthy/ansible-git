@@ -1,5 +1,5 @@
 ---
 git:
   version: 2.3.0
-  install_from_source: yes
+  install_from_source: false
   verify_version: yes
